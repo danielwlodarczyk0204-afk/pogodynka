@@ -32,6 +32,12 @@
 
         {% endblock %}
 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
+        {% endif %}
+
         <br> <br>
         <a href="{{ path('app_forecast_index') }}">forecast <br></a>
         <a href="{{ path('app_place_index') }}">place <br></a>

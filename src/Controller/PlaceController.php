@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // ==================================================
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/place')]
 final class PlaceController extends AbstractController {
     #[Route(name: 'app_place_index', methods: ['GET'])]
+    #[IsGranted('ROLE_PLACE_INDEX')]
     public function index(PlaceRepository $placeRepository): Response {
         return $this->render('place/index.html.twig', [
             'places' => $placeRepository->findAll(),
@@ -26,6 +28,7 @@ final class PlaceController extends AbstractController {
     // -------------------------
 
     #[Route('/new', name: 'app_place_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_PLACE_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response {
         $place = new Place();
         $form = $this->createForm(PlaceType::class, $place, [
@@ -55,6 +58,7 @@ final class PlaceController extends AbstractController {
     // -------------------------
 
     #[Route('/{id}', name: 'app_place_show', methods: ['GET'])]
+    #[IsGranted('ROLE_PLACE_SHOW')]
     public function show(Place $place): Response {
         return $this->render('place/show.html.twig', [
             'place' => $place,
@@ -64,6 +68,7 @@ final class PlaceController extends AbstractController {
     // -------------------------
 
     #[Route('/{id}/edit', name: 'app_place_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_PLACE_EDIT')]
     public function edit(Request $request, Place $place, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response {
         $form = $this->createForm(PlaceType::class, $place, [
             'validation_groups' => 'edit'
@@ -91,6 +96,7 @@ final class PlaceController extends AbstractController {
     // -------------------------
 
     #[Route('/{id}', name: 'app_place_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_PLACE_DELETE')]
     public function delete(Request $request, Place $place, EntityManagerInterface $entityManager): Response {
         if ($this->isCsrfTokenValid('delete'.$place->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($place);
