@@ -1,0 +1,59 @@
+App\Entity\Place:
+    properties:
+        name:
+            -   NotBlank:
+                    groups: [ create, edit ]
+        country:
+            -   NotBlank:
+                    groups: [ create, edit ]
+        latitude:
+            -   Range:
+                    min: -180
+                    max: 180
+                    groups: [ create, edit ]
+        longitude:
+            -   Range:
+                    min: -90
+                    max: 90
+                    groups: [ create, edit ]
+
+App\Entity\Forecast:
+    properties:
+        date:
+            -   NotBlank:
+                    groups: [ create, edit ]
+        temperature:
+            -   Range:
+                    min: -100
+                    max: 70
+                    groups: [ create, edit ]
+        cloudiness:
+            -   Range:
+                    min: 0
+                    max: 100
+                    groups: [ create, edit ]
+        humidity:
+            -   Range:
+                    min: 0
+                    max: 100
+                    groups: [ create, edit ]
+        rain:
+            -   Range:
+                    min: 0
+                    max: 2500
+                    groups: [ create, edit ]
+        place:
+            -   NotBlank:
+                    groups: [ create, edit ]
+
+
+
+
+
+
+
+
+
+
+
+
